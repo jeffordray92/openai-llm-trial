@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+</head>
+<body>
+    <h1>Todo List</h1>
+
+    <h2>Add New Todo</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Todo</button>
+    </form>
+
+    <h2>Todo Entries</h2>
+    {% if todos %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Task Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todos %}
+                    <tr>
+                        <td>{{ todo.title }}</td>
+                        <td>{% if todo.status %}Completed{% else %}Incomplete{% endif %}</td>
+                        <td>{{ todo.llm_response|linebreaks }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No Todo entry</p>
+    {% endif %}
+</body>
+</html>
